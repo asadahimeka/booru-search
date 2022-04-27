@@ -12,11 +12,11 @@
 
     /* Language and Environment */
     "target": "ESNext",
-    "lib": ["ESNext"],
+    "lib": ["ESNext", "DOM"],
     "types": ["node"],
 
     /* Modules */
-    "module": "commonjs",
+    "module": "CommonJS",
     "rootDir": "./src",
     "moduleResolution": "node",
     "resolveJsonModule": true,

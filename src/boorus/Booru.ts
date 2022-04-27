@@ -3,7 +3,7 @@
  * @module Boorus
  */
 
-import fetch, { FetchError } from 'node-fetch'
+import fetch from 'cross-fetch'
 import { BooruError, defaultOptions, searchURI } from '../Constants'
 import { jsonfy, resolveSite, shuffle } from '../Utils'
 
@@ -12,13 +12,6 @@ import Post from '../structures/Post'
 import SearchParameters from '../structures/SearchParameters'
 import SearchResults from '../structures/SearchResults'
 import Site from '../structures/Site'
-
-// Shut up the compiler
-// This attempts to find and use the native browser fetch, if possible
-// Fixes https://github.com/AtoraSuunva/booru/issues/51
-declare const window: any
-const resolvedFetch: typeof fetch =
-  typeof window !== 'undefined' ? window.fetch.bind(window) : fetch
 
 // WIP, will use implement later
 export interface BooruCredentials {
@@ -181,7 +174,7 @@ export class Booru {
     const xml = this.site.type === 'xml'
 
     try {
-      const response = await resolvedFetch(fetchuri, options)
+      const response = await fetch(fetchuri, options)
 
       // Check for CloudFlare ratelimiting
       if (response.status === 503) {
@@ -207,7 +200,7 @@ export class Booru {
         return posts
       }
     } catch (err) {
-      if ((err as FetchError).type === 'invalid-json') return ''
+      if ((err as any).type === 'invalid-json') return ''
       throw err
     }
   }

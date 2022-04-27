@@ -3,12 +3,7 @@
  * @module Structures
  */
 
-import { deprecate } from 'util'
 import Booru from '../boorus/Booru'
-
-// eslint-disable-next-line no-empty,@typescript-eslint/no-empty-function
-const common = deprecate(() => {},
-'Common is now deprecated, just access the properties directly')
 
 /**
  * Tries to figure out what the image url should be
@@ -87,6 +82,21 @@ function getTags(data: any): string[] {
   }
 
   return tags.filter((v: string) => v !== '')
+}
+
+/**
+ * Format file size to human readable format
+ * @param {number} size The file size in bytes
+ * @returns {string} The formatted file size, e.g. 512KB
+ */
+function formatFileSize(size: number): string {
+  if (size > 1024 * 1024) {
+    return (size / (1024 * 1024)).toFixed(2) + 'MB'
+  }
+  if (size > 1024) {
+    return (size / 1024).toFixed(2) + 'KB'
+  }
+  return size.toFixed(2) + 'B'
 }
 
 /**
@@ -260,61 +270,178 @@ export default class Post {
     }
   }
 
-  /**
-   * The direct link to the file
-   * <p>It's prefered to use `.fileUrl` instead because camelCase
-   */
-  get file_url(): string | null {
-    return this.fileUrl
+  /* for compatibility start */
+  /** Is this post safe */
+  get isRatingS() {
+    return this.rating === 's'
   }
+  /** Is this post questionable */
+  get isRatingQ() {
+    return this.rating === 'q'
+  }
+  /** Is this post explicit */
+  get isRatingE() {
+    return this.rating === 'e'
+  }
+  /** The aspect ratio of this post: `width / height` */
+  get aspectRatio() {
+    return this.width / this.height
+  }
+  /** The jpeg url of this post */
+  get jpegUrl(): string {
+    return this.data.jpeg_url ?? ''
+  }
+  /** The jpeg width url of this post */
+  get jpegWidth(): number {
+    return this.data.jpeg_width ?? 0
+  }
+  /** The jpeg height url of this post */
+  get jpegHeight(): number {
+    return this.data.jpeg_height ?? 0
+  }
+  /** The file extension of this post */
+  get fileExt(): string {
+    return this.data.file_ext ?? ''
+  }
+  /** The sample size url of this post */
+  get sampleSize(): number {
+    return this.data.sample_file_size ?? 0
+  }
+  /** The jpeg size url of this post */
+  get jpegSize(): number {
+    return this.data.jpeg_file_size ?? 0
+  }
+  /** The file size url of this post */
+  get fileSize(): number {
+    return this.data.file_size ?? 0
+  }
+  /** The sample image file size of this post */
+  get sampleSizeText() {
+    return formatFileSize(this.data.sample_file_size)
+  }
+  /** The sample download text of this post */
+  get sampleDownloadText() {
+    return `${this.sampleWidth}×${this.sampleHeight} [${this.sampleSizeText}]`
+  }
+  /** The sample download second text of this post */
+  get sampleDownloadSecondText() {
+    return `${this.sampleWidth}×${this.sampleHeight} [${this.sampleSizeText}]`
+  }
+  /** The sample download name of this post */
+  get sampleDownloadName() {
+    return `${this.booru.domain}.${this.id}.${this.sampleWidth}x${this.sampleHeight}`.replace(/\./g, '_')
+  }
+  /** The jpeg image file size of this post */
+  get jpegSizeText() {
+    return formatFileSize(this.data.jpeg_file_size)
+  }
+  /** The jpeg download text of this post */
+  get jpegDownloadText() {
+    return `${this.jpegWidth}×${this.jpegHeight} [${this.jpegSizeText}]`
+  }
+  /** The jpeg download second text of this post */
+  get jpegDownloadSecondText() {
+    return `${this.jpegWidth}×${this.jpegHeight} [${this.jpegSizeText}]`
+  }
+  /** The jpeg download name of this post */
+  get jpegDownloadName() {
+    return `${this.booru.domain}.${this.id}.${this.jpegWidth}x${this.jpegHeight}`.replace(/\./g, '_')
+  }
+  /** The original image file size of this post */
+  get fileSizeText() {
+    return formatFileSize(this.data.file_size)
+  }
+  /** The original file download text of this post */
+  get fileDownloadText() {
+    return `${this.width}×${this.height} [${this.fileSizeText}] ${this.fileExt.toUpperCase()}`
+  }
+  /** The original file download second text of this post */
+  get fileDownloadSecondText() {
+    return `${this.width}×${this.height} [${this.fileSizeText}] ${this.fileExt.toUpperCase()}`
+  }
+  /** The original file download name of this post */
+  get fileDownloadName() {
+    return `${location.hostname}.${this.id}.${this.width}x${this.height}`.replace(/\./g, '_')
+  }
+  /** The formatted created time of this post */
+  get createdTime() {
+    const date = this.createdAt
+    if (!date) return ''
+    return `${date.toLocaleDateString()} ${date.toLocaleTimeString('en-DE')}`
+  }
+  get sourceUrl() {
+    const source = Array.isArray(this.source) ? this.source[0] : this.source
+    if (!source) return ''
+    if (/^https:\/\/i\.pximg\.net\/img-original\/img\/[\d/]{19}\/([\d]{1,})_p[\d]{1,}\.(jpg|png)$/.test(source)) {
+      const pid = RegExp.$1
+      return `https://pixiv.net/artworks/${pid}`
+    }
+    return source
+  }
+  /* for compatibility end */
 
-  /**
-   * The url to the medium-sized image (if available)
-   * <p>It's prefered to use `.sampleUrl` instead because camelCase
-   */
-  get sample_url(): string | null {
-    return this.sampleUrl
-  }
+  // /**
+  //  * The direct link to the file
+  //  *
+  //  * It's prefered to use `.fileUrl` instead because camelCase
+  //  */
+  // get file_url(): string | null {
+  //   return this.fileUrl
+  // }
 
-  /**
-   * The height of the medium-sized image (if available)
-   * <p>It's prefered to use `.sampleHeight` instead because camelCase
-   */
-  get sample_height(): number | null {
-    return this.sampleHeight
-  }
+  // /**
+  //  * The url to the medium-sized image (if available)
+  //  *
+  //  * It's prefered to use `.sampleUrl` instead because camelCase
+  //  */
+  // get sample_url(): string | null {
+  //   return this.sampleUrl
+  // }
 
-  /**
-   * The width of the medium-sized image (if available)
-   * <p>It's prefered to use `.sampleWidth` instead because camelCase
-   */
-  get sample_width(): number | null {
-    return this.sampleWidth
-  }
+  // /**
+  //  * The height of the medium-sized image (if available)
+  //  *
+  //  * It's prefered to use `.sampleHeight` instead because camelCase
+  //  */
+  // get sample_height(): number | null {
+  //   return this.sampleHeight
+  // }
 
-  /**
-   * The url to the smallest image (if available)
-   * <p>It's prefered to use `.previewUrl` instead because camelCase
-   */
-  get preview_url(): string | null {
-    return this.previewUrl
-  }
+  // /**
+  //  * The width of the medium-sized image (if available)
+  //  *
+  //  * It's prefered to use `.sampleWidth` instead because camelCase
+  //  */
+  // get sample_width(): number | null {
+  //   return this.sampleWidth
+  // }
 
-  /**
-   * The height of the smallest image (if available)
-   * <p>It's prefered to use `.previewHeight` instead because camelCase
-   */
-  get preview_height(): number | null {
-    return this.previewHeight
-  }
+  // /**
+  //  * The url to the smallest image (if available)
+  //  *
+  //  * It's prefered to use `.previewUrl` instead because camelCase
+  //  */
+  // get preview_url(): string | null {
+  //   return this.previewUrl
+  // }
 
-  /**
-   * The width of the smallest image (if available)
-   * <p>It's prefered to use `.previewWidth` instead because camelCase
-   */
-  get preview_width(): number | null {
-    return this.previewWidth
-  }
+  // /**
+  //  * The height of the smallest image (if available)
+  //  *
+  //  * It's prefered to use `.previewHeight` instead because camelCase
+  //  */
+  // get preview_height(): number | null {
+  //   return this.previewHeight
+  // }
+
+  // /**
+  //  * The width of the smallest image (if available)
+  //  *
+  //  * It's prefered to use `.previewWidth` instead because camelCase
+  //  */
+  // get preview_width(): number | null {
+  //   return this.previewWidth
+  // }
 
   /**
    * Get the post view (url to the post) of this image
@@ -331,26 +458,5 @@ export default class Post {
    */
   get postView(): string {
     return this.booru.postView(this.id)
-  }
-
-  /**
-   * Get some common props on the image
-   *
-   * @deprecated All common props are now attached directly to the image
-   * @type {Object}
-   *
-   * @example
-   * ```
-   * image.id
-   * // deprecated, use this instead
-   * image.id
-   *
-   * // To access the post's raw data from the booru, do
-   * image._data.id
-   * ```
-   */
-  get common(): this {
-    common()
-    return this
   }
 }

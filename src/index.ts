@@ -5,11 +5,9 @@
 
 import { BooruError, sites, SMap } from './Constants'
 
-import { deprecate } from 'util'
 import Booru, { BooruCredentials } from './boorus/Booru'
 import Derpibooru from './boorus/Derpibooru'
 import XmlBooru from './boorus/XmlBooru'
-import Post from './structures/Post'
 import SearchParameters from './structures/SearchParameters'
 import SearchResults from './structures/SearchResults'
 import Site from './structures/Site'
@@ -104,24 +102,6 @@ export function search(
   }
 
   return booruCache[rSite].search(tags, { limit, random, page, credentials })
-}
-
-// eslint-disable-next-line no-empty,@typescript-eslint/no-empty-function
-const deprecatedCommonfy = deprecate(() => {},
-'Common is now deprecated, just access the properties directly')
-
-/**
- * Deprecated, now a noop
- * <p>This will be removed *soon* please stop using it</p>
- * <p>Just access <code>&lt;{@link Post}&gt;.prop</code>, no need to commonfy anymore
- *
- * @deprecated Just use <code>&lt;{@link Post}&gt;.prop</code> instead
- * @param  {Post[]} images   Array of {@link Post} objects
- * @return {Promise<Post[]>} Array of {@link Post} objects
- */
-export function commonfy(images: Post[]): Promise<Post[]> {
-  deprecatedCommonfy()
-  return Promise.resolve(images)
 }
 
 export { Booru as BooruClass } from './boorus/Booru'
