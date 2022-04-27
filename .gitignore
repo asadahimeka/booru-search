@@ -7,7 +7,6 @@
 node_modules/*
 
 # Filter build
-dist/*
 .tsbuildinfo
 
 # MacOS
