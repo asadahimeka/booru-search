@@ -3,7 +3,8 @@
  * @module Boorus
  */
 
-import fetch from 'cross-fetch'
+// import fetch from 'cross-fetch'
+import 'cross-fetch/polyfill'
 import { BooruError, defaultOptions, searchURI } from '../Constants'
 import { jsonfy, resolveSite, shuffle } from '../Utils'
 

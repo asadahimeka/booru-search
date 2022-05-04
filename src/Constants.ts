@@ -103,6 +103,6 @@ export function searchURI(
 export const defaultOptions: RequestInit = {
   headers: {
     Accept: 'application/json, application/xml;q=0.9, */*;q=0.8',
-    'User-Agent': USER_AGENT,
+    // 'User-Agent': USER_AGENT,
   },
 }
