@@ -106,5 +106,4 @@ export const defaultOptions: RequestInit = {
     Accept: 'application/json, application/xml;q=0.9, */*;q=0.8',
     // 'User-Agent': USER_AGENT,
   },
-  credentials: 'include',
 }
