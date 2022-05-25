@@ -89,7 +89,7 @@ export class Booru {
     {
       limit = 1,
       random = false,
-      page = 0,
+      page = 1,
       showUnavailable = false,
     }: SearchParameters = {},
   ): Promise<SearchResults> {
@@ -149,7 +149,7 @@ export class Booru {
       uri = null,
       limit = 1,
       random = false,
-      page = 0,
+      page = 1,
     }: InternalSearchParameters = {},
   ): Promise<any> {
     if (!Array.isArray(tags)) tags = [tags]

@@ -34,7 +34,7 @@ export declare const USER_AGENT = "booru (https://github.com/AtoraSuunva/booru)"
  * @param {number} [limit=100] The limit for images to return
  * @param {number} [page=0] The page to get
  */
-export declare function searchURI(site: Site, tags: string[] | undefined, limit: number | undefined, page: number): string;
+export declare function searchURI(site: Site, tags?: string[], limit?: number, page?: number): string;
 /**
  * The default options to use for requests
  * <p>I could document this better but meh

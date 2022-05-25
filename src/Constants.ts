@@ -83,8 +83,9 @@ export function searchURI(
   site: Site,
   tags: string[] = [],
   limit = 100,
-  page: number,
+  page = 1,
 ): string {
+  if (site.paginate === 'pid') page -= 1
   return (
     `http${site.insecure ? '' : 's'}://` +
     `${site.domain}${site.api.search}` +

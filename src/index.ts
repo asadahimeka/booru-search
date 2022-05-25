@@ -75,7 +75,7 @@ export default booruForSite
 export function search(
   site: string,
   tags: string[] | string = [],
-  { limit = 1, random = false, page = 0, credentials }: SearchParameters = {},
+  { limit = 1, random = false, page = 1, credentials }: SearchParameters = {},
 ): Promise<SearchResults> {
   const rSite: string | null = resolveSite(site)
 
