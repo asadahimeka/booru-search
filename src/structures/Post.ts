@@ -302,7 +302,7 @@ export default class Post {
   }
   /** The file extension of this post */
   get fileExt(): string {
-    return this.data.file_ext ?? ''
+    return this.data.file_ext ?? this.fileUrl?.split('.').pop() ?? ''
   }
   /** The sample size url of this post */
   get sampleSize(): number {
@@ -322,11 +322,7 @@ export default class Post {
   }
   /** The sample download text of this post */
   get sampleDownloadText() {
-    return `${this.sampleWidth}×${this.sampleHeight} [${this.sampleSizeText}]`
-  }
-  /** The sample download second text of this post */
-  get sampleDownloadSecondText() {
-    return `${this.sampleWidth}×${this.sampleHeight} [${this.sampleSizeText}]`
+    return `${this.sampleWidth}×${this.sampleHeight} [${this.sampleSizeText}] ${this.fileExt.toUpperCase()}`
   }
   /** The sample download name of this post */
   get sampleDownloadName() {
@@ -338,11 +334,7 @@ export default class Post {
   }
   /** The jpeg download text of this post */
   get jpegDownloadText() {
-    return `${this.jpegWidth}×${this.jpegHeight} [${this.jpegSizeText}]`
-  }
-  /** The jpeg download second text of this post */
-  get jpegDownloadSecondText() {
-    return `${this.jpegWidth}×${this.jpegHeight} [${this.jpegSizeText}]`
+    return `${this.jpegWidth}×${this.jpegHeight} [${this.jpegSizeText}] ${this.fileExt.toUpperCase()}`
   }
   /** The jpeg download name of this post */
   get jpegDownloadName() {
@@ -356,13 +348,9 @@ export default class Post {
   get fileDownloadText() {
     return `${this.width}×${this.height} [${this.fileSizeText}] ${this.fileExt.toUpperCase()}`
   }
-  /** The original file download second text of this post */
-  get fileDownloadSecondText() {
-    return `${this.width}×${this.height} [${this.fileSizeText}] ${this.fileExt.toUpperCase()}`
-  }
   /** The original file download name of this post */
   get fileDownloadName() {
-    return `${location.hostname}.${this.id}.${this.width}x${this.height}`.replace(/\./g, '_')
+    return `${this.booru.domain}.${this.id}.${this.width}x${this.height}`.replace(/\./g, '_')
   }
   /** The formatted created time of this post */
   get createdTime() {

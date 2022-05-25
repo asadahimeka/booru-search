@@ -91,24 +91,18 @@ export default class Post {
     get sampleSizeText(): string;
     /** The sample download text of this post */
     get sampleDownloadText(): string;
-    /** The sample download second text of this post */
-    get sampleDownloadSecondText(): string;
     /** The sample download name of this post */
     get sampleDownloadName(): string;
     /** The jpeg image file size of this post */
     get jpegSizeText(): string;
     /** The jpeg download text of this post */
     get jpegDownloadText(): string;
-    /** The jpeg download second text of this post */
-    get jpegDownloadSecondText(): string;
     /** The jpeg download name of this post */
     get jpegDownloadName(): string;
     /** The original image file size of this post */
     get fileSizeText(): string;
     /** The original file download text of this post */
     get fileDownloadText(): string;
-    /** The original file download second text of this post */
-    get fileDownloadSecondText(): string;
     /** The original file download name of this post */
     get fileDownloadName(): string;
     /** The formatted created time of this post */
