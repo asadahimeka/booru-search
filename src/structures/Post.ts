@@ -100,6 +100,10 @@ function formatFileSize(size: number): string {
   return size.toFixed(2) + 'B'
 }
 
+function getFileExt(url: string | null): string {
+  return url?.split('.').pop() ?? ''
+}
+
 /**
  * An image from a booru with a few common props
  *
@@ -302,7 +306,7 @@ export default class Post {
   }
   /** The file extension of this post */
   get fileExt(): string {
-    return this.data.file_ext ?? this.fileUrl?.split('.').pop() ?? ''
+    return this.data.file_ext ?? getFileExt(this.fileUrl)
   }
   /** The sample size url of this post */
   get sampleSize(): number {
@@ -322,7 +326,7 @@ export default class Post {
   }
   /** The sample download text of this post */
   get sampleDownloadText() {
-    return `${this.sampleWidth}×${this.sampleHeight} [${this.sampleSizeText}] ${this.fileExt.toUpperCase()}`
+    return `${this.sampleWidth}×${this.sampleHeight} [${this.sampleSizeText}] ${getFileExt(this.sampleUrl).toUpperCase()}`
   }
   /** The sample download name of this post */
   get sampleDownloadName() {
@@ -334,7 +338,7 @@ export default class Post {
   }
   /** The jpeg download text of this post */
   get jpegDownloadText() {
-    return `${this.jpegWidth}×${this.jpegHeight} [${this.jpegSizeText}] ${this.fileExt.toUpperCase()}`
+    return `${this.jpegWidth}×${this.jpegHeight} [${this.jpegSizeText}] ${getFileExt(this.jpegUrl).toUpperCase()}`
   }
   /** The jpeg download name of this post */
   get jpegDownloadName() {
