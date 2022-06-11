@@ -2,7 +2,6 @@
  * @packageDocumentation
  * @module Boorus
  */
-import 'cross-fetch/polyfill';
 import InternalSearchParameters from '../structures/InternalSearchParameters';
 import SearchParameters from '../structures/SearchParameters';
 import SearchResults from '../structures/SearchResults';

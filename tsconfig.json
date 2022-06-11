@@ -12,7 +12,7 @@
 
     /* Language and Environment */
     "target": "ESNext",
-    "lib": ["ESNext", "DOM"],
+    "lib": ["ESNext"],
     "types": ["node"],
 
     /* Modules */

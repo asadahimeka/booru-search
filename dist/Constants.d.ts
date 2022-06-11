@@ -2,6 +2,7 @@
  * @packageDocumentation
  * @module Constants
  */
+import { RequestInit } from 'node-fetch';
 import Site from './structures/Site';
 import SiteInfo from './structures/SiteInfo';
 export interface SMap<V> {
