@@ -3,7 +3,8 @@
  * @module Boorus
  */
 
-import fetch from 'node-fetch'
+import nodeFetch, { RequestInfo, RequestInit } from 'node-fetch'
+import ProxyAgent  from 'proxy-agent'
 import { BooruError, defaultOptions, searchURI } from '../Constants'
 import { jsonfy, resolveSite, shuffle } from '../Utils'
 
@@ -12,6 +13,11 @@ import Post from '../structures/Post'
 import SearchParameters from '../structures/SearchParameters'
 import SearchResults from '../structures/SearchResults'
 import Site from '../structures/Site'
+
+const fetch = (url: RequestInfo, options?: RequestInit) => {
+  const agent = new ProxyAgent()
+  return nodeFetch(url, { agent, ...options })
+}
 
 // WIP, will use implement later
 export interface BooruCredentials {

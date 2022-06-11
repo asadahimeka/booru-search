@@ -1,6 +1,6 @@
 {
-  "name": "@himeka/booru",
-  "version": "2.6.3",
+  "name": "@himeka/node-booru",
+  "version": "2.7.0",
   "description": "Search (and do other things) on a bunch of different boorus!",
   "author": "AtoraSuunva (https://github.com/AtoraSuunva/)",
   "license": "MIT",
@@ -43,7 +43,8 @@
   },
   "dependencies": {
     "fast-xml-parser": "^3.19.0",
-    "node-fetch": "^2.6.7"
+    "node-fetch": "^2.6.7",
+    "proxy-agent": "^5.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.15.5",
