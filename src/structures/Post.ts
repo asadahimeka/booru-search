@@ -216,7 +216,7 @@ export default class Post {
 
     this.previewUrl = parseImageUrl(
       data.preview_url ||
-        data.preview_file_url ||
+        (data.preview_file_url && data.preview_file_url.replace(/(.*)preview(.*)jpg/, '$1720x720$2webp')) ||
         (data.representations && data.representations.small) ||
         (data.preview && data.preview.url),
       data,
