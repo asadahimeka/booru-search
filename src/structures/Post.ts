@@ -12,7 +12,7 @@ import Booru from '../boorus/Booru'
  * @param {*}      data  boorus
  * @param {Booru}  booru so hard
  */
-function parseImageUrl(url: string, data: any, booru: Booru): string | null {
+function parseImageUrl(url: string, data: any, booru: Booru, type = 'file'): string | null {
   // If the image's file_url is *still* undefined or the source is empty or it's deleted
   // Thanks danbooru *grumble grumble*
   if (!url || url.trim() === '' || data.is_deleted) {
@@ -36,16 +36,20 @@ function parseImageUrl(url: string, data: any, booru: Booru): string | null {
   }
 
   // Why???
-  if (!data.file_url && data.directory !== undefined) {
+  if (!data[`${type}_url`] && data.directory !== undefined) {
     // Danbooru-based boorus sometimes sort their files into directories
     // There's 2 directories, one named after the first 2 characters of the hash
     // and one named after the next 2 characters of the hash
     // Sometimes we get it in the API response as `data.directory`, sometimes it's null
     // for some ungodly reason
     // I despise the danbooru api honestly
-    const directory =
-      data.directory ?? `${data.hash.substr(0, 2)}/${data.hash.substr(2, 2)}`
-    url = `//${booru.domain}/images/${directory}/${data.image}`
+    const directory = data.directory ?? `${data.hash.substr(0, 2)}/${data.hash.substr(2, 2)}`
+    const map: Record<string, string> = {
+      preview: `//${booru.domain}/thumbnails/${directory}/thumbnail_${data.hash}.jpg`,
+      sample: `//${booru.domain}/samples/${directory}/sample_${data.hash}.jpg`,
+      file: `//${booru.domain}/images/${directory}/${data.image}`,
+    }
+    url = map[type]
   }
 
   if (!url.startsWith('http')) {
@@ -200,9 +204,11 @@ export default class Post {
       data.sample_url ||
         data.large_file_url ||
         (data.representations && data.representations.large) ||
-        (data.sample && data.sample.url),
+        (data.sample && data.sample.url) ||
+        data.image,
       data,
       booru,
+      'sample'
     )
 
     this.sampleHeight = parseInt(
@@ -218,9 +224,11 @@ export default class Post {
       data.preview_url ||
         (data.preview_file_url && data.preview_file_url.replace(/(.*)preview(.*)jpg/, '$1720x720$2webp')) ||
         (data.representations && data.representations.small) ||
-        (data.preview && data.preview.url),
+        (data.preview && data.preview.url) ||
+        data.image,
       data,
       booru,
+      'preview'
     )
 
     this.previewHeight = parseInt(
