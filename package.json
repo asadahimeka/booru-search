@@ -1,18 +1,18 @@
 {
   "name": "@himeka/booru",
-  "version": "2.6.4",
+  "version": "2.7.0",
   "description": "Search (and do other things) on a bunch of different boorus!",
-  "author": "AtoraSuunva (https://github.com/AtoraSuunva/)",
+  "author": "asadahimeka (https://github.com/asadahimeka)",
   "license": "MIT",
   "main": "./dist/index.js",
   "typings": "./dist/index.d.ts",
-  "homepage": "https://github.com/AtoraSuunva/booru#readme",
+  "homepage": "https://github.com/asadahimeka/booru-search#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/AtoraSuunva/booru.git"
+    "url": "git+https://github.com/asadahimeka/booru-search.git"
   },
   "bugs": {
-    "url": "https://github.com/AtoraSuunva/booru/issues"
+    "url": "https://github.com/asadahimeka/booru-search/issues"
   },
   "scripts": {
     "file": "node --loader ts-node/esm",
@@ -92,6 +92,10 @@
     {
       "name": "AtoraSuunva",
       "url": "https://github.com/AtoraSuunva"
+    },
+    {
+      "name": "asadahimeka",
+      "url": "https://github.com/asadahimeka"
     }
   ]
 }
