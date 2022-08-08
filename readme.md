@@ -1,12 +1,16 @@
-# `booru`
+# booru
+
+![npm](https://img.shields.io/npm/v/booru.svg) ![GitHub](https://img.shields.io/github/license/AtoraSuunva/booru.svg) ![Typescript typings](https://img.shields.io/badge/Typings-Typescript-informational.svg)
+
+English | [中文](readme.zh-cn.md)
 
 > _A node package to search boorus_
-
-[![CircleCI](https://img.shields.io/circleci/project/github/AtoraSuunva/booru.svg)](https://circleci.com/gh/AtoraSuunva/booru) ![npm](https://img.shields.io/npm/v/booru.svg) ![GitHub](https://img.shields.io/github/license/AtoraSuunva/booru.svg) ![Typescript typings](https://img.shields.io/badge/Typings-Typescript-informational.svg)
+>
+> Forked from [AtoraSuunva/booru](https://github.com/AtoraSuunva/booru)
 
 ## Features
 
-- Search 15 different boorus (check [sites.json](./src/sites.json))
+- Search 19 different boorus (check [sites.json](./src/sites.json))
 - Normalizes all received data into `Post` objects that are consistent no matter which booru you use
 - Access to the raw data received from the booru as well (transformed from XML to JSON, if applicable)
 - Alias support for boorus (`sb` for `safebooru.org`)
@@ -14,6 +18,7 @@
 - Types (using Typescript)
 - Choose the amount of images to get
 - Random support for all sites, using `order:random` on sites that support it and using custom code on those that don't
+- Both browser(without cross-domain) and Node.js support
 - Coming soon(-ish): Support for more than just searching
 
 ---
@@ -21,9 +26,9 @@
 ## Installation
 
 ```sh
-npm add booru
+npm i @himeka/booru
 # or
-yarn add booru
+yarn add @himeka/booru
 ```
 
 ---
@@ -31,7 +36,7 @@ yarn add booru
 ## Usage
 
 ```js
-const Booru = require('booru')
+const Booru = require('@himeka/booru')
 
 Booru.search('safebooru', ['glaceon'], { limit: 3, random: true }).then(
   posts => {
@@ -51,7 +56,7 @@ See [example.js](./example.js) for more examples
 
 ## Docs
 
-Available here: [https://booru.js.org](https://booru.js.org)
+Available here: [docs](https://asadahimeka.github.io/booru-search)
 
 ## Web support
 
@@ -110,13 +115,13 @@ Why not?
 
 [rubikscraft](https://github.com/rubikscraft/booru)
 
-> [Add 2 new boorus (furry.booru.org/realbooru.com)](https://github.com/AtoraSuunva/booru/pull/17)  
+> [Add 2 new boorus (furry.booru.org/realbooru.com)](https://github.com/AtoraSuunva/booru/pull/17)
 > [Various Derpibooru fixes](https://github.com/AtoraSuunva/booru/pull/19)
 
 [Favna](https://github.com/favna/)
 
-> [Add TypeScript declarations](https://github.com/AtoraSuunva/booru/pull/21)  
-> Improve TypeScript port  
+> [Add TypeScript declarations](https://github.com/AtoraSuunva/booru/pull/21)
+> Improve TypeScript port
 > Various other small fixes
 
 [negezor](https://github.com/negezor)

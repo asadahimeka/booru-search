@@ -1,10 +1,7 @@
 {
-  "inputFiles": ["./src"],
   "exclude": "*.json",
-  "toc": [],
-  "mode": "modules",
-  "out": "doc",
-  "name": "booru",
+  "out": "docs",
+  "name": "@himeka/booru",
   "readme": "readme.md",
   "includeVersion": true,
   "categoryOrder": ["Main", "Boorus", "Structures", "Constants", "Utils", "*"]
