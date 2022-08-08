@@ -1,8 +1,0 @@
-{
-  "exclude": "*.json",
-  "out": "docs",
-  "name": "@himeka/booru",
-  "readme": "readme.md",
-  "includeVersion": true,
-  "categoryOrder": ["Main", "Boorus", "Structures", "Constants", "Utils", "*"]
-}
