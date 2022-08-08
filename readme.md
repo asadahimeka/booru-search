@@ -1,8 +1,8 @@
 # booru
 
-![npm](https://img.shields.io/npm/v/booru.svg) ![GitHub](https://img.shields.io/github/license/AtoraSuunva/booru.svg) ![Typescript typings](https://img.shields.io/badge/Typings-Typescript-informational.svg)
+![npm](https://img.shields.io/npm/v/@himeka/booru.svg) ![GitHub](https://img.shields.io/github/license/asadahimeka/booru-search.svg) ![Typescript typings](https://img.shields.io/badge/Typings-Typescript-informational.svg)
 
-English | [中文](readme.zh-cn.md)
+English | [中文](https://github.com/asadahimeka/booru-search/blob/master/readme.zh-cn.md)
 
 > _A node package to search boorus_
 >
