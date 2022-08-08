@@ -97,6 +97,19 @@
     },
     "random": true
   },
+  "lolibooru.moe": {
+    "domain": "lolibooru.moe",
+    "aliases": [
+      "loli",
+      "lolibooru"
+    ],
+    "nsfw": true,
+    "api": {
+      "search": "/post.json?",
+      "postView": "/post/show/"
+    },
+    "random": true
+  },
   "gelbooru.com": {
     "domain": "gelbooru.com",
     "aliases": [
