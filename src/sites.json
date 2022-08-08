@@ -128,6 +128,19 @@
     "paginate": "pid",
     "random": false
   },
+  "allgirl.booru.org": {
+    "domain": "allgirl.booru.org",
+    "aliases": [
+      "allgirl"
+    ],
+    "nsfw": true,
+    "api": {
+      "search": "/index.php?page=dapi&s=post&q=index&json=1&",
+      "postView": "/index.php?page=post&s=view&json=1&id="
+    },
+    "paginate": "pid",
+    "random": false
+  },
   "tbib.org": {
     "domain": "tbib.org",
     "aliases": [
