@@ -12,7 +12,7 @@
 
 ## 特性
 
-- 搜索 19 个不同的 booru 站点（见 [sites.json](./src/sites.json)）
+- 搜索 18 个不同的 booru 站点（见 [sites.json](./src/sites.json)）
 - 将所有接收到的数据标准化为一致的 `Post` 对象
 - 也可以访问从 booru 接收的原始数据（从 XML 转换为 JSON，如果适用）
 - 对 boorus 的别名支持（`sb` -> `safebooru.org`）
