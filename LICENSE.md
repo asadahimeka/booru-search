@@ -1,5 +1,6 @@
 # The MIT License (MIT)
 
+Copyright © `2022` `Yumine Sakura`
 Copyright © `2022` `Atora Suunva`
 
 Permission is hereby granted, free of charge, to any person
