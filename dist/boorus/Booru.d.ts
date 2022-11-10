@@ -7,12 +7,14 @@ import SearchParameters from '../structures/SearchParameters';
 import SearchResults from '../structures/SearchResults';
 import Site from '../structures/Site';
 export interface BooruCredentials {
-    token: string;
+    token?: string;
+    query?: string;
 }
 interface SearchUrlParams {
     tags: string[];
     limit: number;
     page: number;
+    credentials: BooruCredentials;
 }
 /**
  * A basic, JSON booru
@@ -53,7 +55,7 @@ export declare class Booru {
      * @param {SearchParameters} searchArgs The arguments for the search
      * @return {Promise<SearchResults>} The results as an array of Posts
      */
-    search(tags: string | string[], { limit, random, page, showUnavailable, }?: SearchParameters): Promise<SearchResults>;
+    search(tags: string | string[], { limit, random, page, showUnavailable, credentials }?: SearchParameters): Promise<SearchResults>;
     /**
      * Gets the url you'd see in your browser from a post id for this booru
      *
@@ -69,7 +71,7 @@ export declare class Booru {
      * @param {InternalSearchParameters} searchArgs The arguments for the search
      * @return {Promise<Object>}
      */
-    protected doSearchRequest(tags: string[] | string, { uri, limit, random, page, }?: InternalSearchParameters): Promise<any>;
+    protected doSearchRequest(tags: string[] | string, { uri, limit, random, page, credentials }?: InternalSearchParameters): Promise<any>;
     /**
      * Generates a URL to search the booru with, mostly for debugging purposes
      * @param opt
@@ -78,7 +80,7 @@ export declare class Booru {
      * @param {number} [opt.page] The page of results to return
      * @returns A URL to search the booru
      */
-    getSearchUrl({ tags, limit, page, }: Partial<SearchUrlParams>): string;
+    getSearchUrl({ tags, limit, page, credentials }: Partial<SearchUrlParams>): string;
     /**
      * Parse the response from the booru
      *
