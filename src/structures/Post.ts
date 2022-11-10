@@ -20,11 +20,11 @@ function parseImageUrl(url: string, data: any, booru: Booru, type = 'file'): str
   }
 
   if (url.startsWith('/data')) {
-    url = `https://danbooru.donmai.us${url}`
+    url = `https://${booru.domain}${url}`
   }
 
   if (url.startsWith('/cached')) {
-    url = `https://danbooru.donmai.us${url}`
+    url = `https://${booru.domain}${url}`
   }
 
   if (url.startsWith('/_images')) {
