@@ -389,13 +389,14 @@ function resolveSite(domain) {
   }
   return null;
 }
+var xmlParser = new import_fast_xml_parser.XMLParser({
+  ignoreAttributes: false,
+  attributeNamePrefix: ""
+});
 function jsonfy(xml) {
   if (typeof xml === "object")
     return xml;
-  const data = (0, import_fast_xml_parser.parse)(xml, {
-    ignoreAttributes: false,
-    attributeNamePrefix: ""
-  });
+  const data = xmlParser.parse(xml);
   if (data.html || data["!doctype"]) {
     const page = data.html || data["!doctype"]?.html;
     const message = [];

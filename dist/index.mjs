@@ -333,7 +333,7 @@ var defaultOptions = {
 import fetch from "node-fetch";
 
 // src/Utils.ts
-import { parse as xml2json } from "fast-xml-parser";
+import { XMLParser } from "fast-xml-parser";
 function resolveSite(domain) {
   if (typeof domain !== "string") {
     return null;
@@ -346,13 +346,14 @@ function resolveSite(domain) {
   }
   return null;
 }
+var xmlParser = new XMLParser({
+  ignoreAttributes: false,
+  attributeNamePrefix: ""
+});
 function jsonfy(xml) {
   if (typeof xml === "object")
     return xml;
-  const data = xml2json(xml, {
-    ignoreAttributes: false,
-    attributeNamePrefix: ""
-  });
+  const data = xmlParser.parse(xml);
   if (data.html || data["!doctype"]) {
     const page = data.html || data["!doctype"]?.html;
     const message = [];
