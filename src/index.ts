@@ -10,6 +10,7 @@ import Derpibooru from './boorus/Derpibooru'
 import XmlBooru from './boorus/XmlBooru'
 import SearchParameters from './structures/SearchParameters'
 import SearchResults from './structures/SearchResults'
+import Post from './structures/Post'
 import Site from './structures/Site'
 import { resolveSite } from './Utils'
 
@@ -108,3 +109,5 @@ export { Booru as BooruClass } from './boorus/Booru'
 export { sites } from './Constants'
 export { resolveSite } from './Utils'
 export { BooruError } from './Constants'
+export { Derpibooru, XmlBooru, Post, SearchResults, Site }
+export type { BooruCredentials, SearchParameters }

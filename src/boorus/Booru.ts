@@ -5,7 +5,7 @@
 
 import fetch from 'node-fetch'
 import { BooruError, defaultOptions, searchURI } from '../Constants'
-import { jsonfy, resolveSite, shuffle } from '../Utils'
+import { jsonfy, resolveSite, shuffle, tryParseJSON } from '../Utils'
 
 import InternalSearchParameters from '../structures/InternalSearchParameters'
 import Post from '../structures/Post'
@@ -16,12 +16,14 @@ import Site from '../structures/Site'
 // WIP, will use implement later
 export interface BooruCredentials {
   token: string
+  query?: string
 }
 
 interface SearchUrlParams {
   tags: string[]
   limit: number
   page: number
+  credentials: BooruCredentials
 }
 
 /*
@@ -90,6 +92,7 @@ export class Booru {
       random = false,
       page = 1,
       showUnavailable = false,
+      credentials
     }: SearchParameters = {},
   ): Promise<SearchResults> {
     const fakeLimit: number = random && !this.site.random ? 100 : 0
@@ -100,6 +103,7 @@ export class Booru {
         random,
         page,
         showUnavailable,
+        credentials: credentials || this.credentials
       })
       return this.parseSearchResult(searchResult, {
         fakeLimit,
@@ -149,6 +153,7 @@ export class Booru {
       limit = 1,
       random = false,
       page = 1,
+      credentials
     }: InternalSearchParameters = {},
   ): Promise<any> {
     if (!Array.isArray(tags)) tags = [tags]
@@ -169,7 +174,7 @@ export class Booru {
     }
 
     const fetchuri =
-      uri || this.getSearchUrl({ tags, limit: fakeLimit || limit, page })
+      uri || this.getSearchUrl({ tags, limit: fakeLimit || limit, page, credentials })
     const options = defaultOptions
     const xml = this.site.type === 'xml'
 
@@ -186,14 +191,16 @@ export class Booru {
         }
       }
 
-      const data = xml ? await response.text() : await response.json()
-      const posts = xml ? jsonfy(data as string) : data
+      const data = await response.text()
+      const posts = xml ? jsonfy(data) : tryParseJSON(data)
 
       if (!response.ok) {
         throw new BooruError(
           `Received HTTP ${response.status} ` +
             `from booru: '${
-              posts.error || posts.message || JSON.stringify(posts)
+              (posts as any).error ||
+              (posts as any).message ||
+              JSON.stringify(posts)
             }'`,
         )
       } else {
@@ -217,8 +224,9 @@ export class Booru {
     tags = [],
     limit = 100,
     page = 1,
+    credentials
   }: Partial<SearchUrlParams>): string {
-    return searchURI(this.site, tags, limit, page)
+    return searchURI(this.site, tags, limit, page, credentials)
   }
 
   /**

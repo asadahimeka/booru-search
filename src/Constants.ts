@@ -4,6 +4,7 @@
  */
 
 import { RequestInit } from 'node-fetch'
+import { BooruCredentials } from './boorus/Booru'
 import siteJson from './sites.json'
 import Site from './structures/Site'
 import SiteInfo from './structures/SiteInfo'
@@ -84,14 +85,21 @@ export function searchURI(
   tags: string[] = [],
   limit = 100,
   page = 1,
+  credentials?: BooruCredentials
 ): string {
   if (site.paginate === 'pid') page -= 1
+  let credentialsQuery = ''
+  if (credentials?.query) {
+    const q = credentials.query
+    credentialsQuery = q.startsWith('&') ? q : '&' + q
+  }
   return (
     `http${site.insecure ? '' : 's'}://` +
     `${site.domain}${site.api.search}` +
     `${site.tagQuery}=${expandTags(tags).join(site.tagJoin)}` +
     `&limit=${limit}` +
-    `&${site.paginate}=${page}`
+    `&${site.paginate}=${page}` +
+    `${credentialsQuery}`
   )
 }
 

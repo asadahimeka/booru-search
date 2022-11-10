@@ -184,7 +184,7 @@
       "postView": "/post/show/"
     },
     "paginate": "pid",
-    "random": true
+    "random": false
   },
   "rule34.paheal.net": {
     "domain": "rule34.paheal.net",
