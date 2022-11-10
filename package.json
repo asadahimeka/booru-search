@@ -54,7 +54,7 @@
     "node": ">=10.0.0"
   },
   "dependencies": {
-    "fast-xml-parser": "^3.19.0",
+    "fast-xml-parser": "^4.0.11",
     "node-fetch": "^2.6.7"
   },
   "devDependencies": {
