@@ -106,7 +106,7 @@
       "sakuga",
       "sakugabooru"
     ],
-    "nsfw": true,
+    "nsfw": false,
     "api": {
       "search": "/post.json?",
       "postView": "/post/show/"
@@ -258,5 +258,31 @@
     },
     "random": true,
     "defaultTags": ["rating:safe"]
+  },
+  "booru.allthefallen.moe": {
+    "domain": "booru.allthefallen.moe",
+    "aliases": [
+      "atf",
+      "atfbooru"
+    ],
+    "nsfw": true,
+    "api": {
+      "search": "/posts.json?",
+      "postView": "/posts/"
+    },
+    "random": true
+  },
+  "aibooru.online": {
+    "domain": "aibooru.online",
+    "aliases": [
+      "ai",
+      "aibooru"
+    ],
+    "nsfw": true,
+    "api": {
+      "search": "/posts.json?",
+      "postView": "/posts/"
+    },
+    "random": true
   }
 }
