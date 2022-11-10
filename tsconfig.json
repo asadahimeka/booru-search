@@ -1,47 +1,22 @@
 {
-  "include": ["./src/**/*", "test/test.ts"],
-  "ts-node": {
-    "transpileOnly": true,
-    "transpiler": "ts-node/transpilers/swc-experimental",
-    "files": true
-  },
   "compilerOptions": {
-    /* Projects */
-    "incremental": true,
-    "tsBuildInfoFile": ".tsbuildinfo",
-
-    /* Language and Environment */
-    "target": "ESNext",
-    "lib": ["ESNext"],
+    "target": "esnext",
+    "lib": ["esnext"],
     "types": ["node"],
-
-    /* Modules */
     "module": "CommonJS",
-    "rootDir": "./src",
     "moduleResolution": "node",
+    "baseUrl": "./src",
     "resolveJsonModule": true,
-
-    /* Emit */
-    "declaration": true,
-    "sourceMap": true,
+    "declaration": false,
+    "declarationMap": false,
+    "sourceMap": false,
     "outDir": "./dist",
-    "newLine": "lf",
-
-    /* Interop Constraints */
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-
-    /* Type Checking */
     "strict": true,
-    "useUnknownInCatchVariables": true,
-    "noFallthroughCasesInSwitch": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noImplicitReturns": true,
-    // "noUncheckedIndexedAccess": true,
-    "noImplicitOverride": true,
-
-    /* Completeness */
     "skipLibCheck": true
-  }
+  },
+  "include": [
+    "./src/**/*.ts"
+  ]
 }

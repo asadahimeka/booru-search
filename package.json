@@ -5,8 +5,19 @@
   "author": "asadahimeka (https://github.com/asadahimeka)",
   "license": "MIT",
   "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
   "typings": "./dist/index.d.ts",
   "homepage": "https://github.com/asadahimeka/booru-search#readme",
+  "files": [
+    "dist/"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/asadahimeka/booru-search.git"
@@ -15,13 +26,11 @@
     "url": "https://github.com/asadahimeka/booru-search/issues"
   },
   "scripts": {
-    "file": "node --loader ts-node/esm",
-    "test": "jest",
+    "build": "tsup",
+    "release": "node scripts/release.mjs",
     "lint": "eslint -c .eslintrc.js --ext .ts ./src",
     "prebuild": "npm run lint",
-    "build": "tsc",
-    "postbuild": "node ./minify.js",
-    "prepublishOnly": "npm run build"
+    "test": "jest"
   },
   "keywords": [
     "booru",
@@ -49,11 +58,6 @@
     "node-fetch": "^2.6.7"
   },
   "devDependencies": {
-    "@babel/core": "^7.15.5",
-    "@babel/polyfill": "^7.12.1",
-    "@babel/preset-env": "^7.15.4",
-    "@babel/preset-typescript": "^7.15.0",
-    "@swc/core": "^1.2.128",
     "@types/jest": "^27.0.1",
     "@types/node": "^16.9.0",
     "@types/node-fetch": "^2.5.12",
@@ -64,14 +68,9 @@
     "eslint-plugin-import": "^2.24.2",
     "eslint-plugin-jsdoc": "^36.1.0",
     "jest": "^27.1.1",
-    "prettier": "^2.3.2",
-    "terser": "^5.7.2",
-    "ts-node": "^10.4.0",
-    "typescript": "^4.4.2"
+    "tsup": "^6.4.0",
+    "typescript": "^4.8.4"
   },
-  "files": [
-    "dist/"
-  ],
   "directories": {
     "lib": "src/",
     "test": "test/"

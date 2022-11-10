@@ -1,4 +1,5 @@
 node_modules
 dist
-jest.config.js
-.eslintrc.js
+scripts
+/*.js
+tsup.config.ts
