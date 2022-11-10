@@ -44,9 +44,10 @@ function parseImageUrl(url: string, data: any, booru: Booru, type = 'file'): str
     // for some ungodly reason
     // I despise the danbooru api honestly
     const directory = data.directory ?? `${data.hash.substr(0, 2)}/${data.hash.substr(2, 2)}`
+    const hash = data.image.split('.')[0]
     const map: Record<string, string> = {
-      preview: `//${booru.domain}/thumbnails/${directory}/thumbnail_${data.hash}.jpg`,
-      sample: `//${booru.domain}/samples/${directory}/sample_${data.hash}.jpg`,
+      preview: `//${booru.domain}/thumbnails/${directory}/thumbnail_${hash}.jpg`,
+      sample: `//${booru.domain}/samples/${directory}/sample_${hash}.jpg`,
       file: `//${booru.domain}/images/${directory}/${data.image}`,
     }
     url = map[type]
@@ -115,6 +116,16 @@ function formatFileSize(size: number): string {
 
 function getFileExt(url: string | null): string {
   return url?.split('.').pop() ?? ''
+}
+
+function dealDanbooruPreviewUrl(url: string | null, booru: Booru) {
+  if ([
+    'danbooru.donmai.us',
+    'aibooru.online'
+  ].includes(booru.domain)) {
+    return url && url.replace(/(.*)preview(.*)jpg/, '$1720x720$2webp')
+  }
+  return url
 }
 
 /**
@@ -231,7 +242,7 @@ export default class Post {
 
     this.previewUrl = parseImageUrl(
       data.preview_url ||
-        (data.preview_file_url && data.preview_file_url.replace(/(.*)preview(.*)jpg/, '$1720x720$2webp')) ||
+        dealDanbooruPreviewUrl(data.preview_file_url, booru) ||
         (data.representations && data.representations.small) ||
         (data.preview && data.preview.url) ||
         data.image,

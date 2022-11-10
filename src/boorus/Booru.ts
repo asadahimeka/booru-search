@@ -15,7 +15,7 @@ import Site from '../structures/Site'
 
 // WIP, will use implement later
 export interface BooruCredentials {
-  token: string
+  token?: string
   query?: string
 }
 
