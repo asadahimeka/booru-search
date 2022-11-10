@@ -3,7 +3,7 @@
  * @module Boorus
  */
 
-import fetch from 'node-fetch'
+import 'isomorphic-unfetch'
 import { BooruError, defaultOptions, searchURI } from '../Constants'
 import { jsonfy, resolveSite, shuffle, tryParseJSON } from '../Utils'
 

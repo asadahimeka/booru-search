@@ -1,9 +1,7 @@
 "use strict";
-var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
 var __getOwnPropNames = Object.getOwnPropertyNames;
-var __getProtoOf = Object.getPrototypeOf;
 var __hasOwnProp = Object.prototype.hasOwnProperty;
 var __export = (target, all) => {
   for (var name in all)
@@ -17,10 +15,6 @@ var __copyProps = (to, from, except, desc) => {
   }
   return to;
 };
-var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
-  isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
-  mod
-));
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
 // src/index.ts
@@ -373,7 +367,7 @@ var defaultOptions = {
 };
 
 // src/boorus/Booru.ts
-var import_node_fetch = __toESM(require("node-fetch"));
+var import_isomorphic_unfetch = require("isomorphic-unfetch");
 
 // src/Utils.ts
 var import_fast_xml_parser = require("fast-xml-parser");
@@ -817,7 +811,7 @@ var Booru = class {
     const options = defaultOptions;
     const xml = this.site.type === "xml";
     try {
-      const response = await (0, import_node_fetch.default)(fetchuri, options);
+      const response = await fetch(fetchuri, options);
       if (response.status === 503) {
         const body = await response.clone().text();
         if (body.includes("cf-browser-verification")) {

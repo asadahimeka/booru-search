@@ -330,7 +330,7 @@ var defaultOptions = {
 };
 
 // src/boorus/Booru.ts
-import fetch from "node-fetch";
+import "isomorphic-unfetch";
 
 // src/Utils.ts
 import { XMLParser } from "fast-xml-parser";

@@ -3,7 +3,6 @@
  * @module Constants
  */
 
-import { RequestInit } from 'node-fetch'
 import { BooruCredentials } from './boorus/Booru'
 import siteJson from './sites.json'
 import Site from './structures/Site'
