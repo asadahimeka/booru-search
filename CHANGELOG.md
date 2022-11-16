@@ -1,5 +1,23 @@
 # booru Changelog
 
+## v2.7.6
+
+- feat: support atfbooru
+- feat: support aibooru
+- feat: support credentials query
+- fix: use isomorphic-unfetch for browser support
+- chore: use tsup to build dist files
+- chore: update fast-xml-parser
+
+## v2.7.1
+- fix: use native fetch at browser
+- fix: danbooru use 720*720 preview_url
+- fix: change default page number to 1
+- fix: some boorus didnt get preview_url & sample_url
+- feat: support lolibooru
+- feat: support sakugabooru
+- feat: support 3dbooru
+
 ## 2.5.6
 
 - Update endpoints for Hypohub
