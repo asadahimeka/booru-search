@@ -41,6 +41,13 @@ async function booruSearch(site, tags, limit = 1, random = true) {
   return console.log(posts[0].fileUrl)
 }
 
+// Search with credentials
+async function booruSearch(site, tags, limit = 1) {
+  const posts = await Booru.search(site, tags, { limit, credentials: { query: '&api_key=xxx&user_id=1' } })
+
+  return console.log(posts[0].fileUrl)
+}
+
 // Create an instance of a booru to use yourself
 // This allows you to create a booru with certain credentials/settings and reuse it
 // Internally, `Booru.search` just creates boorus and caches them
