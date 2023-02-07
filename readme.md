@@ -64,6 +64,22 @@ booru was built for Node.js, and is only officially supported for Node.js. Issue
 
 It's possible to use booru on the web using webpack (or similar), although your experience may vary. Some websites don't have the proper CORS headers, meaning that API requests to those sites from a browser will fail! This is not an issue I can fix in the package, and requires either that booru to add proper support themselves or for you to find a workaround for CORS.
 
+For sites that do not support CORS, you can hack the code as follows, noting that this code should be placed before importing `@himeka/booru`.
+
+The CORS proxy needs to support calls of the form `https://cors.example.com/https://konachan.net/post.json`.
+
+```js
+const _fetch = window.fetch
+const proxy = 'https://cors.example.com/' // Replace with your own CORS proxy
+window.fetch = (input, init) => {
+  let url = input.toString()
+  if (url.startsWith('https')) {
+    url = proxy + url
+  }
+  return _fetch(url, init)
+}
+```
+
 ## FAQ
 
 ### What are the properties of a `Post`?

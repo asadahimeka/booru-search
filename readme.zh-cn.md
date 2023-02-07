@@ -65,6 +65,22 @@ booru 主要是为 Node.js 构建的，浏览器支持可能有限。
 可以使用 webpack（或类似工具）在 web 上使用 booru，尽管体验可能会有所不同。
 某些网站没有正确的 CORS 标头，这意味着从浏览器对这些网站的 API 请求将失败，需要自行解决跨域问题。
 
+对于不支持 CORS 的站点，可以按如下代码 hack 一下，注意这段代码要放到引用 `@himeka/booru` 之前。
+
+CORS 代理需要支持 `https://cors.example.com/https://konachan.net/post.json` 形式的调用。
+
+```js
+const _fetch = window.fetch
+const proxy = 'https://cors.example.com/' // 替换成你自己的 CORS 代理
+window.fetch = (input, init) => {
+  let url = input.toString()
+  if (url.startsWith('https')) {
+    url = proxy + url
+  }
+  return _fetch(url, init)
+}
+```
+
 ## FAQ
 
 ### `Post` 有什么属性？
