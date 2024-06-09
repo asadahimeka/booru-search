@@ -196,7 +196,7 @@ var sites_default = {
     ],
     nsfw: true,
     api: {
-      search: "/api/danbooru/find_posts/index.xml?",
+      search: "/api/danbooru/find_posts?",
       postView: "/post/view/"
     },
     random: false
@@ -320,12 +320,16 @@ function searchURI(site, tags = [], limit = 100, page = 1, credentials) {
     const q = credentials.query;
     credentialsQuery = q.startsWith("&") ? q : "&" + q;
   }
-  return `http${site.insecure ? "" : "s"}://${site.domain}${site.api.search}${site.tagQuery}=${expandTags(tags).join(site.tagJoin)}&limit=${limit}&${site.paginate}=${page}${credentialsQuery}`;
+  let uri = `http${site.insecure ? "" : "s"}://${site.domain}${site.api.search}${site.tagQuery}=${expandTags(tags).join(site.tagJoin)}&limit=${limit}&${site.paginate}=${page}${credentialsQuery}`;
+  if (typeof BOORU_FETCH_PROXY === "function") {
+    uri = BOORU_FETCH_PROXY(uri) || uri;
+  }
+  return uri;
 }
 var defaultOptions = {
   headers: {
     Accept: "application/json, application/xml;q=0.9, */*;q=0.8",
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36 Edg/106.0.1370.52"
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36 Edg/125.0.0.0"
   }
 };
 
@@ -712,6 +716,13 @@ var Booru = class {
     this.site = site;
     this.credentials = credentials;
   }
+  normalizeTags(tags) {
+    if (!Array.isArray(tags)) {
+      return [tags];
+    } else {
+      return tags.slice();
+    }
+  }
   async search(tags, {
     limit = 1,
     random = false,
@@ -720,8 +731,9 @@ var Booru = class {
     credentials
   } = {}) {
     const fakeLimit = random && !this.site.random ? 100 : 0;
+    const tagArray = this.normalizeTags(tags);
     try {
-      const searchResult = await this.doSearchRequest(tags, {
+      const searchResult = await this.doSearchRequest(tagArray, {
         limit,
         random,
         page,
@@ -730,7 +742,7 @@ var Booru = class {
       });
       return this.parseSearchResult(searchResult, {
         fakeLimit,
-        tags,
+        tags: tagArray,
         limit,
         random,
         page,
@@ -757,8 +769,6 @@ var Booru = class {
     page = 1,
     credentials
   } = {}) {
-    if (!Array.isArray(tags))
-      tags = [tags];
     let fakeLimit;
     if (random) {
       if (this.site.random) {
@@ -847,9 +857,6 @@ var Booru = class {
     if (tags === void 0) {
       tags = [];
     }
-    if (!Array.isArray(tags)) {
-      tags = [tags];
-    }
     if (!showUnavailable) {
       posts = posts.filter((p) => p.available);
     }
@@ -864,16 +871,14 @@ var Derpibooru = class extends Booru_default {
     super(site, credentials);
   }
   search(tags, { limit = 1, random = false, page = 0 } = {}) {
-    if (!Array.isArray(tags)) {
-      tags = [tags];
-    }
+    const tagArray = this.normalizeTags(tags);
     if (tags[0] === void 0) {
-      tags[0] = "*";
+      tagArray[0] = "*";
     }
     page += 1;
-    const uri = this.getSearchUrl({ tags, limit, page }) + (random && this.site.random === "string" ? `&${this.site.random}` : "") + (this.credentials ? `&key=${this.credentials.token}` : "");
-    return super.doSearchRequest(tags, { limit, random, page, uri }).then(
-      (r) => super.parseSearchResult(r, { fakeLimit: 0, tags, limit, random, page })
+    const uri = this.getSearchUrl({ tags: tagArray, limit, page }) + (random && this.site.random === "string" ? `&${this.site.random}` : "") + (this.credentials ? `&key=${this.credentials.token}` : "");
+    return super.doSearchRequest(tagArray, { limit, random, page, uri }).then(
+      (r) => super.parseSearchResult(r, { fakeLimit: 0, tags: tagArray, limit, random, page })
     ).catch((e) => Promise.reject(new BooruError(e)));
   }
 };

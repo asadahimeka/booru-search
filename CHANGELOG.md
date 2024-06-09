@@ -1,5 +1,10 @@
 # booru Changelog
 
+## v2.7.7
+
+- feat: support cors proxy using global method
+- fix: update api endpoint of rule34.paheal
+
 ## v2.7.6
 
 - feat: support atfbooru

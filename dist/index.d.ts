@@ -33,7 +33,7 @@ interface InternalSearchParameters extends SearchParameters {
     /** If `order:random` should be faked */
     fakeLimit?: number;
     /** The tags used in the search */
-    tags?: string[] | string;
+    tags?: string[];
 }
 
 /**
@@ -369,6 +369,7 @@ declare class Booru {
      * @param credentials Credentials for the API (Currently not used)
      */
     constructor(site: Site, credentials?: BooruCredentials);
+    protected normalizeTags(tags: string | string[]): string[];
     /**
      * Search for images on this booru
      * @param {String|String[]} tags The tag(s) to search for
@@ -387,11 +388,11 @@ declare class Booru {
      * The internal & common searching logic, pls dont use this use .search instead
      *
      * @protected
-     * @param {String[]|String} tags The tags to search with
+     * @param {String[]} tags The tags to search with
      * @param {InternalSearchParameters} searchArgs The arguments for the search
      * @return {Promise<Object>}
      */
-    protected doSearchRequest(tags: string[] | string, { uri, limit, random, page, credentials }?: InternalSearchParameters): Promise<any>;
+    protected doSearchRequest(tags: string[], { uri, limit, random, page, credentials }?: InternalSearchParameters): Promise<any>;
     /**
      * Generates a URL to search the booru with, mostly for debugging purposes
      * @param opt

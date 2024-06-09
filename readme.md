@@ -64,17 +64,26 @@ booru was built for Node.js, and is only officially supported for Node.js. Issue
 
 It's possible to use booru on the web using webpack (or similar), although your experience may vary. Some websites don't have the proper CORS headers, meaning that API requests to those sites from a browser will fail! This is not an issue I can fix in the package, and requires either that booru to add proper support themselves or for you to find a workaround for CORS.
 
-For sites that do not support CORS, you can hack the code as follows, noting that this code should be placed before importing `@himeka/booru`.
+For sites that do not support CORS, there are two solutions as follows
 
-The CORS proxy needs to support calls of the form `https://cors.example.com/https://konachan.net/post.json`.
+- Define the global method `BOORU_FETCH_PROXY` to handle the request URL. Note that the code should be placed before calling `Booru.search`.
+
+```js
+// Replace with your own CORS proxy
+globalThis.BOORU_FETCH_PROXY = u => `https://cors.example.com/${u}`
+```
+
+- Or you can hack it according to the following code. Note that this code should be placed before the reference `@himeka/booru`.
+
+The CORS proxy in the following example needs to support calls in the form of `https://cors.example.com/https://konachan.net/post.json`.
 
 ```js
 const _fetch = window.fetch
 const proxy = 'https://cors.example.com/' // Replace with your own CORS proxy
-window.fetch = (input, init) => {
+  window.fetch = (input, init) => {
   let url = input.toString()
-  if (url.startsWith('https')) {
-    url = proxy + url
+  if (url.startsWith('https')) { // Handle judgment conditions by yourself
+    url = proxy + url // Process it to the format required by the proxy
   }
   return _fetch(url, init)
 }

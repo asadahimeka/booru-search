@@ -69,6 +69,8 @@ function expandTags(tags: string[]): string[] {
   })
 }
 
+declare const BOORU_FETCH_PROXY: (uri: string) => string
+
 /**
  * Create a full uri to search with
  *
@@ -92,7 +94,7 @@ export function searchURI(
     const q = credentials.query
     credentialsQuery = q.startsWith('&') ? q : '&' + q
   }
-  return (
+  let uri = (
     `http${site.insecure ? '' : 's'}://` +
     `${site.domain}${site.api.search}` +
     `${site.tagQuery}=${expandTags(tags).join(site.tagJoin)}` +
@@ -100,6 +102,10 @@ export function searchURI(
     `&${site.paginate}=${page}` +
     `${credentialsQuery}`
   )
+  if (typeof BOORU_FETCH_PROXY === 'function') {
+    uri = BOORU_FETCH_PROXY(uri) || uri
+  }
+  return uri
 }
 
 /**
@@ -111,6 +117,6 @@ export function searchURI(
 export const defaultOptions: RequestInit = {
   headers: {
     Accept: 'application/json, application/xml;q=0.9, */*;q=0.8',
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36 Edg/106.0.1370.52',
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36 Edg/125.0.0.0',
   },
 }

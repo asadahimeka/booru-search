@@ -3,6 +3,9 @@ const { BooruError, sites } = require('./dist')
 // for ES6:
 // import Booru, { search, BooruError, sites } from 'booru'
 
+// Use you own cors proxy in browser case
+// globalThis.BOORU_FETCH_PROXY = u => `https://cors.example.com/${u}`
+
 const argTags = process.argv.slice(3)
 const site = process.argv[2] || 'sb'
 const tags = process.argv[2] ? argTags : ['cat']
